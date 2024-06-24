@@ -1,0 +1,283 @@
+<?php
+function servidor(){
+     //return "localhost";
+     return "fortunaroyal.com";
+}
+
+function  user(){
+     //return "root";
+     return "fortunar";
+}
+
+function password(){
+     //return "";
+     return "Ni1Z)Ny@510cQl";
+}
+
+function database(){
+     return "fortunar_royal";
+}
+
+if( isset($_GET['install']) ){
+  $conexion = mysqli_connect(servidor(),user(),password(),database()) or die ("Error de Conexion: ". mysqli_connect_error());
+  //CLIENTE
+  $consulta = "CREATE TABLE IF NOT EXISTS USUARIOS (
+        ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        FECHA TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        IP VARCHAR(255),
+        APODO VARCHAR(25),
+        PASSWORD VARCHAR(13),
+        CORREO VARCHAR(34),
+        TELEFONO VARCHAR(15),
+        NOMBRE VARCHAR(255),
+        NACIONALIDAD VARCHAR(34),
+        LINKREFERIDO VARCHAR(255),
+        CODIGOREFERIDO VARCHAR(255),
+        WALLET VARCHAR(255),
+        APIKEY VARCHAR(255),
+        HEXWALLET VARCHAR(255),
+        RATE INT NOT NULL DEFAULT 0,
+        SALDO DECIMAL(13,4) UNSIGNED NOT NULL DEFAULT 0.00,
+        USDT DECIMAL(13,4) UNSIGNED NOT NULL DEFAULT 0.00,
+        P2P DECIMAL(13,4) UNSIGNED NOT NULL DEFAULT 0.00,
+        SALDOREFERIDO DECIMAL(13,4) UNSIGNED NOT NULL DEFAULT 0.00,
+        ACTIVO INT NOT NULL DEFAULT 0,
+        BLOQUEADO INT NOT NULL DEFAULT 0,
+        NIVEL INT NOT NULL DEFAULT 0,
+        PERFIL VARCHAR(255) DEFAULT 'perfil.jpg',
+        CLIENTE JSON)";
+  $resultado = mysqli_query( $conexion, $consulta ) or die ( "ERROR: creacion a la Tabla de datos: CLIENTE");
+  //METODOS
+  $consulta = "CREATE TABLE IF NOT EXISTS METODOS (
+        ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        METODO VARCHAR(255),
+        COSTO DECIMAL(13,6) NOT NULL DEFAULT 0.000000,
+        PRECIO1 DECIMAL(13,6) NOT NULL DEFAULT 0.000000,
+        PRECIO2 DECIMAL(13,6) NOT NULL DEFAULT 0.000000,
+        PORCEN1 INT NOT NULL DEFAULT 0,
+        PORCEN2 INT NOT NULL DEFAULT 0,
+        PERFIL VARCHAR(255),
+        BLOQUEADO INT NOT NULL DEFAULT 0)";
+  $resultado = mysqli_query( $conexion, $consulta ) or die ( "ERROR: creacion a la Tabla de datos: METODO");
+  //USUARIOSMETODOS
+  $consulta = "CREATE TABLE IF NOT EXISTS USUARIOSMETODOS (
+        ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        CORREO VARCHAR(34),
+        METODO TEXT,
+        WALLET TEXT,
+        PRECIOVENTA DECIMAL(16,4) NOT NULL DEFAULT 0.00,
+        PRECIOCOMPRA DECIMAL(16,4) NOT NULL DEFAULT 0.00,
+        SALDOFIAT DECIMAL(16,4) NOT NULL DEFAULT 0.00,
+        SALDOFRD DECIMAL(16,4) NOT NULL DEFAULT 0.00,
+        RATE INT NOT NULL DEFAULT 1,
+        ACTIVO INT NOT NULL DEFAULT 0,
+        BLOQUEADO INT NOT NULL DEFAULT 0)";
+  $resultado = mysqli_query( $conexion, $consulta ) or die ( "ERROR: creacion a la Tabla de datos: USUARIOMETODOS");
+  //NOTIFICACIONES
+  $consulta = "CREATE TABLE IF NOT EXISTS NOTIFICACIONES (
+        ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        FECHA TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        CORREO VARCHAR(34),
+        UBICACION VARCHAR(34),
+        NOTICIA TEXT,
+        BG VARCHAR(255) DEFAULT '#FFC0CB',
+        FG VARCHAR(255) DEFAULT '#1A1A1A',
+        VISTO INT NOT NULL DEFAULT 0,
+        BLOQUEADO INT NOT NULL DEFAULT 0)";
+  $resultado = mysqli_query( $conexion, $consulta ) or die ( "ERROR: creacion a la Tabla de datos: NOTIFICACIONES");
+
+  //OPERACIONES
+  $consulta = "CREATE TABLE IF NOT EXISTS OPERACIONES (
+        ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        FECHA TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        TICKET BIGINT NOT NULL DEFAULT 0,
+        SUJETO VARCHAR(255) DEFAULT 'CLI',
+        CAJERO VARCHAR(34),
+        CLIENTE VARCHAR(34),
+        TIPO VARCHAR(34),
+        WALLET TEXT,
+        REFERENCIA TEXT,
+        MONTO DECIMAL(16,6) NOT NULL DEFAULT 0.00,
+        RECIBE DECIMAL(16,6) NOT NULL DEFAULT 0.00,
+        COMISION DECIMAL(13,6) NOT NULL DEFAULT 0.00,
+        PAGADO INT NOT NULL DEFAULT 0,
+        ENVIADO INT NOT NULL DEFAULT 0,
+        ESTATUS VARCHAR(34),
+        MONEDA VARCHAR(20))";
+  $resultado = mysqli_query( $conexion, $consulta ) or die ( "ERROR: creacion a la Tabla de datos: OPERACIONES");
+  //LIBROCONTABLE
+  $consulta = "CREATE TABLE IF NOT EXISTS LIBROCONTABLE (
+        ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        FECHA TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        OPERACION VARCHAR(4) DEFAULT 'COMI',
+        TIPO VARCHAR(34),
+        MONTO DECIMAL(10,4) NOT NULL DEFAULT 0.000000,
+        DEVUELTO INT NOT NULL DEFAULT 0,
+        ESTATUS VARCHAR(34) DEFAULT 'PAGADO',
+        MONEDA VARCHAR(4) DEFAULT 'FRD')";
+  $resultado = mysqli_query( $conexion, $consulta ) or die ( "ERROR: creacion a la Tabla de datos: LIBROCONTABLE");
+  //FORTUNA
+  $consulta = "CREATE TABLE IF NOT EXISTS FORTUNA (
+        ID_FORT INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        WALLET TEXT,
+        CORREO VARCHAR(34),
+        WEB VARCHAR(80),
+        DEPOSITOS VARCHAR(34),
+        RETIROS VARCHAR(34),
+        SOPORTE VARCHAR(34),
+        PORCEN INT NOT NULL DEFAULT 0,
+        INTERESPRESTAMO DECIMAL(4,2) UNSIGNED NOT NULL DEFAULT 0.00,
+        COMISIONRETORNO DECIMAL(4,2) UNSIGNED NOT NULL DEFAULT 0.00,
+        COMISIONEMISION DECIMAL(4,2) UNSIGNED NOT NULL DEFAULT 0.00,
+        TICKET BIGINT NOT NULL DEFAULT 0,
+        USUARIOS BIGINT NOT NULL DEFAULT 0,
+        BG VARCHAR(255) DEFAULT '#FFC0CB',
+        FG VARCHAR(255) DEFAULT '#1A1A1A',
+        SALDO DECIMAL(13,2) UNSIGNED NOT NULL DEFAULT 0.00)";
+  $resultado = mysqli_query( $conexion, $consulta ) or die ( "ERROR: creacion a la Tabla de datos: FORTUNA");
+  //CHAT
+  $consulta = "CREATE TABLE IF NOT EXISTS CHAT (
+        ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        TICKED VARCHAR(80),
+        FECHA TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        AMO VARCHAR(34),
+        ENVIA VARCHAR(34),
+        RECIBE VARCHAR(34),
+        MENSAJE TEXT,
+        ACTIVO INT DEFAULT 0,
+        LEIDO INT DEFAULT 0,
+        CERRADO INT DEFAULT 0,
+        BG VARCHAR(34) DEFAULT '#DEEEF3',
+        FG VARCHAR(34) DEFAULT '#4D4D4D')";
+  $resultado = mysqli_query( $conexion, $consulta ) or die ( "ERROR: creacion a la Tabla de datos: CHAT");
+  //PROMOCION
+  $consulta = "CREATE TABLE IF NOT EXISTS PROMO (
+        ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        FECHA TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        UBICACION VARCHAR(34) DEFAULT 'INICIO',
+        MENSAJE TEXT,
+        COLORBG VARCHAR(34),
+        COLORFG VARCHAR(34),
+        BORDER  VARCHAR(34),
+        VISIBLE INT NOT NULL DEFAULT 0)";
+  $resultado = mysqli_query( $conexion, $consulta ) or die ( "ERROR: creacion a la Tabla de datos: PROMO");
+  //BLOQUEOS
+  $consulta = "CREATE TABLE IF NOT EXISTS BLOQUEO (
+        ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        JUEGO VARCHAR(34),
+        DESDE VARCHAR(34),
+        HASTA VARCHAR(34),
+        VISIBLE INT NOT NULL DEFAULT 0)";
+  $resultado = mysqli_query( $conexion, $consulta ) or die ( "ERROR: creacion a la Tabla de datos: BLOCK");
+  //REFERIDOS
+  $consulta = "CREATE TABLE IF NOT EXISTS REFERIDOS (
+        ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        REFERIDO VARCHAR(34),
+        REFERENTE VARCHAR(34),
+        VALIDO INT NOT NULL DEFAULT 0,
+        RETIRADO INT NOT NULL DEFAULT 0,
+        RECOMPENSA DECIMAL(13,2) UNSIGNED NOT NULL DEFAULT 0.50)";
+  $resultado = mysqli_query( $conexion, $consulta ) or die ( "ERROR: creacion a la Tabla de datos: REFERIDOS");
+  //TOKEN
+    $consulta = "CREATE TABLE IF NOT EXISTS TOKEN (
+          ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+          FECHA TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+          CORREO VARCHAR(34),
+          CEO TEXT,
+          TELEFONO VARCHAR(50),
+          INSTAGRAM VARCHAR(200),
+          TOKEN VARCHAR(4),
+          NOMBRE VARCHAR(34),
+          DESCRIPCION TEXT,
+          CONTRATO TEXT,
+          BEP20 INT DEFAULT 0,
+          IMAGEN VARCHAR(255) DEFAULT 'token.png',
+          BLOQUEADO INT DEFAULT 0,
+          RATE INT DEFAULT 1,
+          VALOR DECIMAL(16,4) NOT NULL DEFAULT 0.00,
+          PATRIMONIOINICIAL DECIMAL(16,4) NOT NULL DEFAULT 0.00,
+          PATRIMONIO DECIMAL(16,4) NOT NULL DEFAULT 0.00,
+          GANANCIANETA DECIMAL(16,4) NOT NULL DEFAULT 0.00,
+          MAXSUPPLY INT DEFAULT 0,
+          VOLUMEN INT DEFAULT 0)";
+    $resultado = mysqli_query( $conexion, $consulta ) or die ( "ERROR: creacion a la Tabla de datos: TOKEN");
+  //ORDENTOKEN
+    $consulta = "CREATE TABLE IF NOT EXISTS ORDENTOKEN (
+          ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+          FECHA TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+          ORDEN VARCHAR(255),
+          TOKEN VARCHAR(4),
+          OPERACION VARCHAR(34) DEFAULT 'COMPRA',
+          USUARIO VARCHAR(34),
+          COMPRADOR VARCHAR(34),
+          VENDEDOR VARCHAR(34),
+          GANANCIA DECIMAL(16,4) NOT NULL DEFAULT 0.00,
+          APORTE DECIMAL(16,4) NOT NULL DEFAULT 0.00,
+          PRECIO DECIMAL(16,4) NOT NULL DEFAULT 0.00,
+          PRECIO_COMPRA DECIMAL(16,4) NOT NULL DEFAULT 0.00,
+          PRECIO_VENTA DECIMAL(16,4) NOT NULL DEFAULT 0.00,
+          CANTIDAD DECIMAL(16,4) NOT NULL DEFAULT 0.00,
+          PROCESADO DECIMAL(16,4) NOT NULL DEFAULT 0.00,
+          RESTANTE DECIMAL(16,4) NOT NULL DEFAULT 0.00,
+          TOTAL DECIMAL(16,6) NOT NULL DEFAULT 0.00,
+          ELIMINADO INT DEFAULT 0,
+          CANCELADO INT DEFAULT 0,
+          EJECUTADO INT DEFAULT 0,
+          BLOQUEADO INT DEFAULT 0)";
+    $resultado = mysqli_query( $conexion, $consulta ) or die ( "ERROR: creacion a la Tabla de datos: ORDENTOKEN");
+  //WALLETOKEN
+    $consulta = "CREATE TABLE IF NOT EXISTS WALLETOKEN (
+          ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+          CORREO VARCHAR(34),
+          TOKEN VARCHAR(4),
+          APORTE DECIMAL(16,4) NOT NULL DEFAULT 0.00,
+          CANTIDAD DECIMAL(16,4) NOT NULL DEFAULT 0.00,
+          VALOR DECIMAL(16,4) NOT NULL DEFAULT 0.00,
+          SALDO DECIMAL(16,4) NOT NULL DEFAULT 0.00,
+          TOTAL DECIMAL(16,4) NOT NULL DEFAULT 0.00,
+          PRESTAMO DECIMAL(16,4) NOT NULL DEFAULT 0.00,
+          BLOQUEADO INT DEFAULT 0)";
+    $resultado = mysqli_query( $conexion, $consulta ) or die ( "ERROR: creacion a la Tabla de datos: WALLETOKEN");
+  //ACTIVIDADTOKEN
+    $consulta = "CREATE TABLE IF NOT EXISTS ACTIVIDADTOKEN (
+          ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+          TOKEN VARCHAR(4),
+          VOLUMEN_VENTA INT DEFAULT 0,
+          VOLUMEN_COMPRA INT DEFAULT 0,
+          PRECIO_COMPRA DECIMAL(16,4) NOT NULL DEFAULT 0.00,
+          PRECIO_VENTA DECIMAL(16,4) NOT NULL DEFAULT 0.00)";
+    $resultado = mysqli_query( $conexion, $consulta ) or die ( "ERROR: creacion a la Tabla de datos: ACTIVIDADTOKEN");
+    //PRESTAMO X TOKEN
+    $consulta = "CREATE TABLE IF NOT EXISTS PRESTAMOTOKEN (
+          ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+          INICIO TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+          FIN TIMESTAMP,
+          ORDEN VARCHAR(255),
+          CORREO VARCHAR(34),
+          TOKEN VARCHAR(4),
+          AUTO INT DEFAULT 0,
+          PAGADO INT DEFAULT 0,
+          ACEPTADO INT DEFAULT 0,
+          TIEMPO INT DEFAULT 1,
+          CORTE VARCHAR(30) DEFAULT 'MENSUAL',
+          TASA DECIMAL(16,4) NOT NULL DEFAULT 0.00,
+          CAPITAL DECIMAL(16,4) NOT NULL DEFAULT 0.00,
+          ABONO DECIMAL(16,4) NOT NULL DEFAULT 0.00,
+          PORPAGAR DECIMAL(16,4) NOT NULL DEFAULT 0.00)";
+    $resultado = mysqli_query( $conexion, $consulta ) or die ( "ERROR: creacion a la Tabla de datos: PRESTAMOTOKEN");
+    //REGISTRO DE PRECIOS TOKEN
+    $consulta = "CREATE TABLE IF NOT EXISTS PRECIOTOKEN (
+          ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+          INICIO TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+          TOKEN VARCHAR(4),
+          AUTO INT DEFAULT 0,
+          PATRIMONIO DECIMAL(16,4) NOT NULL DEFAULT 0.00,
+          VOLUMEN DECIMAL(16,4) NOT NULL DEFAULT 0.00,
+          PRECIO DECIMAL(16,4) NOT NULL DEFAULT 0.00,
+          CRECIMIENTO DECIMAL(16,4) NOT NULL DEFAULT 0.00)";
+    $resultado = mysqli_query( $conexion, $consulta ) or die ( "ERROR: creacion a la Tabla de datos: PRECIOTOKEN");
+  mysqli_close($conexion);
+  echo "<h1>Tablas Creadas...</h1>";
+}
+
+?>

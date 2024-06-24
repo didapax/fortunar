@@ -1,0 +1,25 @@
+[27-Oct-2022 10:07:22 America/Caracas] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'fortunar_royal.TOKENOTICIAS' doesn't exist in /home/fortunar/public_html/fortunar/Feed/Games/info.php:186
+Stack trace:
+#0 /home/fortunar/public_html/fortunar/Feed/Games/info.php(186): mysqli_query()
+#1 {main}
+  thrown in /home/fortunar/public_html/fortunar/Feed/Games/info.php on line 186
+[27-Oct-2022 12:29:00 America/Caracas] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'fortunar_royal.TOKENOTICIAS' doesn't exist in /home/fortunar/public_html/fortunar/Feed/Games/info.php:186
+Stack trace:
+#0 /home/fortunar/public_html/fortunar/Feed/Games/info.php(186): mysqli_query()
+#1 {main}
+  thrown in /home/fortunar/public_html/fortunar/Feed/Games/info.php on line 186
+[27-Oct-2022 12:32:07 America/Caracas] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'fortunar_royal.TOKENOTICIAS' doesn't exist in /home/fortunar/public_html/fortunar/Feed/Games/info.php:186
+Stack trace:
+#0 /home/fortunar/public_html/fortunar/Feed/Games/info.php(186): mysqli_query()
+#1 {main}
+  thrown in /home/fortunar/public_html/fortunar/Feed/Games/info.php on line 186
+[27-Oct-2022 12:33:19 America/Caracas] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'fortunar_royal.TOKENOTICIAS' doesn't exist in /home/fortunar/public_html/fortunar/Feed/Games/info.php:186
+Stack trace:
+#0 /home/fortunar/public_html/fortunar/Feed/Games/info.php(186): mysqli_query()
+#1 {main}
+  thrown in /home/fortunar/public_html/fortunar/Feed/Games/info.php on line 186
+[07-Nov-2022 08:48:22 America/Caracas] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'fortunar_royal.TOKENOTICIAS' doesn't exist in /home/fortunar/public_html/fortunar/Feed/Games/info.php:186
+Stack trace:
+#0 /home/fortunar/public_html/fortunar/Feed/Games/info.php(186): mysqli_query()
+#1 {main}
+  thrown in /home/fortunar/public_html/fortunar/Feed/Games/info.php on line 186

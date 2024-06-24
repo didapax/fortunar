@@ -1,0 +1,49 @@
+{
+  "name": "Fortuna Royal",
+  "short_name": "fortunaroyal",
+  "lang": "es-ES",
+  "name": "Fortuna Royal",
+  "version": "1.6.1",
+  "main": "worker.js",
+  "icons": [
+    {
+      "src": "icon_144.png",
+      "type": "image/png",
+      "sizes": "144x144"
+    },
+    {
+      "src": "icon_16.png",
+      "type": "image/png",
+      "sizes": "16x16"
+    },
+    {
+      "src": "icon_128.png",
+      "type": "image/png",
+      "sizes": "128x128"
+    }
+  ],
+  "start_url": "/index.php",
+  "background_color": "#252954",
+  "display": "standalone",
+  "id": "/",
+  "scope": "/",
+  "orientation": "portrait",
+  "theme_color": "#0E0E23",
+  "shortcuts": [
+    {
+      "name": "Fortuna Royal",
+      "short_name": "Fortuna",
+      "description": "Comprar y Vender Participaciones",
+      "url": "index.php",
+      "icons": [{ "src": "icon_128.png", "sizes": "128x128" }]
+    }
+  ],
+  "description": "Comprar y vender Participaciones",
+  "screenshots": [
+    {
+      "src": "screens.png",
+      "type": "image/png",
+      "sizes": "320x320"
+    }
+  ]
+}

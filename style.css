@@ -1,0 +1,177 @@
+html {
+height: 100%;
+    box-sizing: border-box;
+    --bgColorMenu : #1d1d27;
+    --duration: .3s;
+
+}
+
+html *,
+html *::before,
+html *::after {
+
+    box-sizing: inherit;
+
+}
+
+.footer {
+  position: fixed;
+  z-index: 3;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+
+  }
+
+body{
+
+    margin: 0 auto;
+    height: 100vh;
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    margin-top: auto;
+    overflow: hidden;
+    align-items: center;
+    justify-content: center;
+    background-color: black;
+    -webkit-tap-highlight-color: transparent;
+    transition: background-color var(--duration);
+
+}
+
+.menu{
+
+    margin: 0 auto;
+    display: flex;
+    bottom:3%;
+    /* Works well with 100% width  */
+    width: 32.05em;
+    height: 100px;
+    font-size: 1.5em;
+    padding: 0 1.33em;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    background-color: #02020F;
+
+}
+
+.behind-menu{
+
+    margin: 0;
+    display: flex;
+    /* Works well with 100% width  */
+    width: 32.05em;
+    height: 10%;
+    font-size: 1.5em;
+    padding: 0 100.85em;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    background-color: #02020F;
+
+}
+
+
+.change-iframe{
+
+    all: unset;
+    flex-grow: 1;
+    z-index: 100;
+    display: flex;
+    cursor: pointer;
+    position: relative;
+    border-radius: 50%;
+    align-items: center;
+    will-change: transform;
+    justify-content: center;
+    padding: 0.55em 0 0.85em;
+    transition: transform var(--timeOut , var(--duration));
+
+}
+
+.change-iframe::before{
+
+    content: "";
+    z-index: -1;
+    width: 4.0em;
+    height: 4.0em;
+    border-radius: 50%;
+    position: absolute;
+    transform: scale(0);
+    transition: background-color var(--duration), transform var(--duration);
+
+}
+
+
+.change-iframe.active {
+
+    transform: translate3d(0, -.8em , 0);
+
+}
+
+.change-iframe.active::before{
+
+    transform: scale(1);
+    background-color: var(--bgColorItem);
+
+}
+
+.icon{
+
+    width: 2.6em;
+    height: 2.6em;
+    stroke: white;
+    fill: transparent;
+    stroke-width: 1pt;
+    stroke-miterlimit: 10;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 400;
+
+}
+
+.change-iframe.active .icon {
+
+    animation: strok 1.5s reverse;
+
+}
+
+@keyframes strok {
+
+    100% {
+
+        stroke-dashoffset: 400;
+
+    }
+
+}
+
+.menu__border{
+
+    left: 0;
+    bottom: 99%;
+    width: 10.9em;
+    height: 2.4em;
+    position: absolute;
+    clip-path: url(#menu);
+    will-change: transform;
+    background-color: #02020F;
+    transition: transform var(--timeOut , var(--duration));
+
+}
+
+.svg-container {
+
+    width: 0;
+    height: 0;
+}
+
+
+@media screen and (max-width: 50em) {
+    .menu{
+        font-size: .8em;
+    }
+}
